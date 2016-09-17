@@ -31,11 +31,16 @@ module Enumerable
 
   def my_all?
   	new_array = []
-    my_each { |i| new_array << i if yield(i) }
-		if self == new_array
-			return true
-		else
-			return false
-		end
+    my_each { |i| return false unless yield(i) }
+		return true
   end
+
+
+  def my_none?
+  	new_array = []
+    my_each { |i| return true unless yield(i) }
+		return false
+  end
+
+  
 end
