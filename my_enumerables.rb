@@ -28,4 +28,14 @@ module Enumerable
 		new_array
   end
 
+
+  def my_all?
+  	new_array = []
+    my_each { |i| new_array << i if yield(i) }
+		if self == new_array
+			return true
+		else
+			return false
+		end
+  end
 end
