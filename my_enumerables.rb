@@ -38,35 +38,59 @@ module Enumerable
     end
     return true
   end
-  #edge cases tested to here
+  
+
+  def my_any?
+    if block_given?
+      my_each { |i| return true if yield(i) }
+    else
+      my_each { |i| return true if (i)}
+    end
+    return false
+  end
+
 
   def my_none?
     if block_given?
       my_each { |i| return false if yield(i) }
-		  return true
     else
-      return false
+      my_each { |i| return false if (i)}
     end
+    return true
   end
 
 
   def my_count
     if block_given?
       iterator = 0
-      my_each { iterator +=1 if yield(i) }
+      my_each { |i| iterator +=1 if yield(i) }
       iterator
     else
       return self.size
     end
   end
 
-  def my_map
-    return "#<Enumerator: #{self}:map>" unless block_given?
+
+  def my_map #Does not accept procs
+    return "#<Enumerator: #{self}:my_map>" unless block_given?
     new_array = []
     my_each {|i| new_array << yield(i)}
     self.replace new_array
     return self
   end
 
+  def my_inject(first_element = nil) #need unles block_given?
+    result = first_element.nil? ? nil : first_element
+    for i in self
+      result = yield(result,i)
+    end
+    return result
+  end
+
 
 end
+
+def multiply_els(input)
+  input.my_inject(1) {|initial, sum| initial * sum}
+end
+puts multiply_els([2,4,5])
