@@ -79,7 +79,7 @@ module Enumerable
     return self
   end
 
-  def my_inject(first_element = nil) #need unles block_given?
+  def my_inject(first_element = nil) #need unless block_given?
     result = first_element.nil? ? nil : first_element
     for i in self
       result = yield(result,i)
